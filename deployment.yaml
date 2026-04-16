@@ -1,0 +1,21 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pathnex-web-deployment
+  namespace: pathnex-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pathnex-web
+  template:
+    metadata:
+      labels:
+        app: pathnex-web
+    spec:
+      containers:
+      - name: pathnex-web-container
+        image: nginx
+        ports:
+        - containerPort: 80

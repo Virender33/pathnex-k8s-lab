@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pathnex-app
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pathnex-data
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pathnex-monitoring
+
+
+# kubectl create namespace pathnex-app
+# kubectl create namespace pathnex-data
+# kubectl create namespace pathnex-monitoring
+
+
+
+

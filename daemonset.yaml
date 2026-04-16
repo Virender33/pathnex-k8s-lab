@@ -1,0 +1,18 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: pathnex-monitor-daemonset
+  namespace: pathnex-monitoring
+spec:
+  selector:
+    matchLabels:
+      app: pathnex-monitor
+  template:
+    metadata:
+      labels:
+        app: pathnex-monitor
+    spec:
+      containers:
+      - name: node-exporter
+        image: prom/node-exporter

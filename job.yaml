@@ -1,0 +1,14 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pathnex-batch-job
+  namespace: pathnex-app
+spec:
+  template:
+    spec:
+      containers:
+      - name: batch-container
+        image: busybox
+        command: ["echo", "Pathnex Batch Job Running"]
+      restartPolicy: Never
