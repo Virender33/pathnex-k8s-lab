@@ -7,11 +7,11 @@ resource "aws_instance" "pathnex" {
   ami                    = "ami-0f559c3642608c138"
   instance_type          = "t3.micro" # You can change it according to your need
   count                  = 1
-  key_name               = "Pathnex-ec2-key" # change if key name is different in aws account
-  subnet_id              = "subnet-060e30fbb2ffaa857" # Change it with your subnet id
-  vpc_security_group_ids = ["sg-006c76c984d9e1309"] # Change it with your security group
+  key_name               = "Pathnex-Kubernetes" # change if key name is different in aws account
+  subnet_id              = "subnet-0c794e612ad601693" # Change it with your subnet id
+  vpc_security_group_ids = ["sg-020de4ff81e280c7e"] # Change it with your security group
   tags = {
-    Name = "pathnex-ec2"
+    Name = "Pathnex-Ec2-26"
   }
 }
 
