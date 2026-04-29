@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pathnex-web-deployment
+  namespace: pathnex-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pathnex-web
+  template:
+    metadata:
+      labels:
+        app: pathnex-web
+    spec:
+      tolerations:
+      - key: "pathnex"
+        operator: "Equal"
+        value: "restricted"
+        effect: "NoSchedule"
+
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: pathnex
+                operator: In
+                values:
+                - high-performance
+
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app: pathnex-web
+              topologyKey: "kubernetes.io/hostname"
+
+      containers:
+      - name: pathnex-web-container
+        image: nginx
+        ports:
+        - containerPort: 80
+        env:
+        - name: DB_HOST
+          value: pathnex-db-service.pathnex-data.svc.cluster.local

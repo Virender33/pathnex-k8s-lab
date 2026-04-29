@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pathnex-db-statefulset
+  namespace: pathnex-data
+spec:
+  serviceName: "pathnex-db-service"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pathnex-db
+  template:
+    metadata:
+      labels:
+        app: pathnex-db
+    spec:
+      tolerations:
+      - key: "pathnex"
+        operator: "Equal"
+        value: "restricted"
+        effect: "NoSchedule"
+
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: pathnex
+                operator: In
+                values:
+                - high-performance
+
+      containers:
+      - name: mongo
+        image: mongo
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pathnex-db-secret
+              key: DB_PASSWORD
